@@ -1,10 +1,6 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
   
 jobs:
@@ -12,7 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Conventional Commits Check
-      # You may pin to the exact commit or the version.
-      # uses: bilalshaikh42/action-conventional-commits@8dde8f839c293021d10abca3e0078f313f49ab41
         uses: bilalshaikh42/action-conventional-commits@v2.0.1
 
