@@ -1,4 +1,4 @@
-name: CI
+name: First
 
 on:
   push:
@@ -9,4 +9,3 @@ jobs:
     steps: 
       - name: Conventional Commits Check
         uses: bilalshaikh42/action-conventional-commits@v2.0.1
-
