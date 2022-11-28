@@ -16,6 +16,7 @@ jobs:
           valid-commit-types: >
             [
               "feat",
+              "fix",
               "docs",
               "style",
               "refactor",
