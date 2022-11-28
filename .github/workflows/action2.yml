@@ -1,0 +1,32 @@
+
+name: Conventional Commits
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: gentleseal/action-conventional-commits@master
+        with:
+          valid-commit-types: >
+            [
+              "feat",
+              "fix",
+              "docs",
+              "style",
+              "refactor",
+              "test",
+              "build",
+              "ci",
+              "chore",
+              "revert",
+              "merge",
+              "wip",
+              "enh"
+            ]
