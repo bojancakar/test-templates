@@ -3,7 +3,8 @@ name: Conventional Commits
 
 on:
   pull_request:
-      types: [opened, reopened]
+    types: [opened, reopened]
+
 jobs:
   build:
     name: Conventional Commits
@@ -17,5 +18,5 @@ jobs:
             [
               "feat:",
               "fix:",
-              "docs:",
-            ]
+              "docs:"
+              ]
