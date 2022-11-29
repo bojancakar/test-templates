@@ -1,10 +1,9 @@
 
 name: Conventional Commits
 
-on:
+on: 
   pull_request:
-    types: [opened, reopened]
-      branches: [main]
+    types: [opened,reopened]
 
 jobs:
   build:
@@ -12,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - uses: gentleseal/action-conventional-commits@v1.2.1
         with:
           valid-commit-types: >
@@ -21,3 +19,4 @@ jobs:
               "fix:",
               "docs:"
               ]
+
