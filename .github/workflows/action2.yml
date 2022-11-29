@@ -3,7 +3,9 @@ name: Conventional Commits
 
 on:
   pull_request:
-    
+    types: [opened, reopened]
+    branches: [main]
+
 jobs:
   build:
     name: Conventional Commits
@@ -19,4 +21,3 @@ jobs:
               "fix:",
               "docs:"
               ]
-
