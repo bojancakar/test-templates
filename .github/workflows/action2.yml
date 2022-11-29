@@ -2,8 +2,11 @@
 name: Conventional Commits
 
 on: 
-  pull_request:
-    types: [opened,reopened]
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
 
 jobs:
   build:
