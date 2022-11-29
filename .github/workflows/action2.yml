@@ -12,3 +12,4 @@ jobs:
       - name: Conventional Commits
         
         uses: crqra/conventional-commits-action@1.0.0
+        allowed-types: pas konj macka
