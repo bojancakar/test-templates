@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: gentleseal/action-conventional-commits@v1.2.1
+      - uses: gentleseal/action-conventional-commits@master
         with:
           valid-commit-types: >
             [
@@ -19,5 +19,5 @@ jobs:
               "fix:",
               "docs:"
               ]
-              
+
 
