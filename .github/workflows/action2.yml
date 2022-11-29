@@ -2,6 +2,7 @@ name: Conventional Commits
 
 on:
   pull_request:
+    types: [opened, reopened]
     branches: [ main ]
 
 jobs:
