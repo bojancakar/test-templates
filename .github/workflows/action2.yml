@@ -1,15 +1,22 @@
-name: Test
+name: Conventional Commits
 
 on:
   pull_request:
-    branches: [main]
-    types: [opened, reopened, synchronize, edited, ready_for_review]
+    branches: [ master ]
 
 jobs:
-  conventional-commits:
+  build:
+    name: Conventional Commits
     runs-on: ubuntu-latest
     steps:
-      - name: Conventional Commits
-        uses: crqra/conventional-commits-action@1.0.0
+      - uses: actions/checkout@v2
 
-        
+      - uses: gentleseal/action-conventional-commits@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          valid-commit-types: >
+            [
+              "feat:",
+              "fix:",
+              "docs:"
+            ]
