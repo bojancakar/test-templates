@@ -1,15 +1,12 @@
 name: Test
 
 on:
-  pull_request:
-    branches: [main]
-    types: [opened, reopened, synchronize, edited, ready_for_review]
+  push:
 
 jobs:
-  conventional-commits:
+  some-job:
     runs-on: ubuntu-latest
     steps:
-
       - name: Conventional Commits        
-        uses: crqra/conventional-commits-action@1.0.0
-        
+        run: echo "Hello"
+
