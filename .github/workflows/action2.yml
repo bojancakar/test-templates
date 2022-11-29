@@ -16,7 +16,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           valid-commit-types: >
             [
-              "feat",
-              "fix",
-              "docs"
+              "feat:",
+              "fix:",
+              "docs:"
             ]
