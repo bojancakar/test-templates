@@ -1,26 +1,38 @@
+name: "Lint PR"
 
-name: Conventional Commits
-
-on: 
+on:
   pull_request_target:
     types:
       - opened
-      - reopened
       - edited
+      - synchronize
 
 jobs:
-  build:
-    name: Conventional Commits
+  main:
+    name: Validate PR title
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: gentleseal/action-conventional-commits@master
+      - uses: amannn/action-semantic-pull-request@v5
+
         with:
-          valid-commit-types: >
-            [
-              "feat:",
-              "fix:",
-              "docs:"
-              ]
-
-
+          types: |
+            fix
+            feat
+          scopes: |
+            core
+            ui
+          requireScope: true
+          disallowScopes: |
+            release
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            doesn't start with an uppercase character.
+          githubBaseUrl: https://github.com/bojancakar/kk
+          ignoreLabels: |
+            bot
+            ignore-semantic-pull-request
+          headerPattern: '^(\w*)(?:\(([\w$.\-*/ ]*)\))?: (.*)$'
+          headerPatternCorrespondence: type, scope, subject
+          wip: true
