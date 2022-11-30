@@ -5,22 +5,22 @@ In the Jira issue in the development section, you have two options, create branc
 
 The commit message should be structured as follows:
 
-<p align="center"><FONT COLOR=" #0ca80e"> type</FONT>:<FONT COLOR=" #0352fc">  description <FONT COLOR=" f000"> Jira issue ID </FONT></FONT></p></b>
+<p align="center"> type: description Jira issue ID </b></p><br>
 Commit types:
 
-<b>fix</b>  -  Commits, for all code changes.
-<b>feat</b> - Commits, that adds a new feature.
-<b>bug</b>   -  Commits, which are used when working on bug fixes.
+<b>fix</b>  -  Commits, for all code changes.<br>
+<b>feat</b> - Commits, that adds a new feature.<br>
+<b>bug</b>   -  Commits, which are used when working on bug fixes.<br>
 <b>docs</b>  - Commits, that affect documentation only.
 
 Examples of correct commit messages: 
 
 <img src="https://static.thenounproject.com/png/2537955-200.png" 
-     width="25" 
-     height="25" /> fix: some fix INAPP-90
+     width="18" 
+     height="18" /> fix: some fix INAPP-90 <br>
 <img src="https://static.thenounproject.com/png/2537955-200.png" 
-     width="25" 
-     height="25" /> feat: new feature INAPP-90 
+     width="18" 
+     height="18" /> feat: new feature INAPP-90 
 
 Examples of incorrect commit messages:
 - fix: some fix
@@ -33,11 +33,11 @@ Examples of incorrect commit messages:
 Examples of correct branch names: 
 
 <img src="https://cdn.iconscout.com/icon/free/png-256/git-branch-458285.png" 
-     width="25" 
-     height="25" /> INAPP-90-some-text
+     width="20" 
+     height="20" /> INAPP-90-some-text <br>
 <img src="https://cdn.iconscout.com/icon/free/png-256/git-branch-458285.png" 
-     width="25" 
-     height="25" /> INAPP-90 
+     width="20" 
+     height="20" /> INAPP-90 
 
 Exampes of incorrect branch names:
 - some-text-INAPP-90
