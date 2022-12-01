@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: gentleseal/action-conventional-commits@master
+      - uses: gentleseal/action-conventional-commits@v1.2.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           valid-commit-types: >
