@@ -7,6 +7,4 @@ on:
 
 jobs:
   PR-titel-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: bojancakar/pr-title-template/.github/workflow/pr-title.yml
+      uses: bojancakar/pr-title-template/.github/workflow/pr-title.yml
