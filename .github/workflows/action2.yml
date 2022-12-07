@@ -7,4 +7,4 @@ on:
 
 jobs:
   PR-titel-check:
-      uses: bojancakar/pr-title-template/.github/workflow/pr-title.yml
+      uses: bojancakar/pr-title-template/.github/workflow/pr-title.yml@latest
