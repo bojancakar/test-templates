@@ -1,24 +1,12 @@
-name: Conventional Commits
+name: PR-title-check
 
 on:
   pull_request:
-    types: [ opened, reopened]
+    types: [ opened, reopened,edited,synchronize]
     branches: [ main ]
 
 jobs:
-  build:
-    name: Conventional Commits
+  PR-titel-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: gentleseal/action-conventional-commits@v1.2.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          valid-commit-types: >
-            [
-              "feat",
-              "fix",
-              "bugs",
-              "docs"
-            ]
+      - uses: bojancakar/pr-title-template/.github/workflow/pr-title.yml
