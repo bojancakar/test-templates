@@ -1,0 +1,30 @@
+name: Release
+
+on: 
+  push:
+    branches: [main]
+  
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release tagging
+        id: versioning
+        uses: PaulHatch/semantic-version@v4.0.2
+        with:
+          branch: main
+          tag_prefix: "v"
+          major_pattern: "BREAKING CHANGES"
+          minor_pattern: "feat:"
+          format: "v${major}.${minor}.${patch}-prerelease${increment}"
+      
+      - name: Create Release
+        if: ${{ !startsWith{github.ref, 'refs/tags/'} }}
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token}}
+        with:
+          tag_name: ${{ steps.versioning.outputs.version }}
+          release_name: ${{ steps.versioning.outputs.version }}
+          prerelease: true
