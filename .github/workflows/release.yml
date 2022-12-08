@@ -70,8 +70,3 @@ jobs:
         with:
           bump_version_scheme: minor
           use_github_release_notes: true
-      - uses: haya14busa/action-update-semver@v1
-        if: "!steps.bumpr.outputs.skip"
-        with:
-          github_token: ${{ secrets.github_token }}
-          tag: ${{ steps.bumpr.outputs.next_version }}
