@@ -60,23 +60,34 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: rymndhng/release-on-push-action@master
+      - name:
+        uses: rymndhng/release-on-push-action@master
         with:
           bump_version_scheme: minor
           use_github_release_notes: true
+      
+      - name: Release tagging
+        id: versioning
+        uses: PaulHatch/semantic-version@v4.0.2
+        with:
+          branch: main
+          tag_prefix: "v"
+          major_pattern: "BREAKING CHANGES"
+          minor_pattern: "feat:"
+          format: "v${major}.${minor}.${patch}"
 
-   tag:
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v3
-         with:
-           fetch-depth: 0
-       - name: Release tagging
-         id: versioning
-         uses: PaulHatch/semantic-version@v4.0.2
-         with:
-           branch: main
-           tag_prefix: "v"
-           major_pattern: "BREAKING CHANGES"
-           minor_pattern: "feat:"
-           format: "v${major}.${minor}.${patch}"
+  # tag:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Release tagging
+  #       id: versioning
+  #       uses: PaulHatch/semantic-version@v4.0.2
+  #       with:
+  #         branch: main
+  #         tag_prefix: "v"
+  #         major_pattern: "BREAKING CHANGES"
+  #         minor_pattern: "feat:"
+  #         format: "v${major}.${minor}.${patch}"
