@@ -65,3 +65,18 @@ jobs:
           bump_version_scheme: minor
           use_github_release_notes: true
 
+   tag:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v3
+         with:
+           fetch-depth: 0
+       - name: Release tagging
+         id: versioning
+         uses: PaulHatch/semantic-version@v4.0.2
+         with:
+           branch: main
+           tag_prefix: "v"
+           major_pattern: "BREAKING CHANGES"
+           minor_pattern: "feat:"
+           format: "v${major}.${minor}.${patch}"
