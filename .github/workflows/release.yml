@@ -33,11 +33,15 @@
 #           prerelease: false
 name: release
 on:
-  pull_request:
-    types: [labeled]
-    branches: [main]
+  push:
+    branches:
+      - main
     tags:
-    - 'v*.*.*'
+      - 'v*.*.*'
+  pull_request:
+    types:
+      - labeled
+
 jobs:
   release:
     if: github.event.action != 'labeled'
