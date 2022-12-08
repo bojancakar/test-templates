@@ -65,4 +65,12 @@ jobs:
         with:
           bump_version_scheme: minor
           use_github_release_notes: true
-          tag_prefix: ""
+
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "latest"
+          message: "Latest release"
