@@ -65,14 +65,4 @@ jobs:
         with:
           bump_version_scheme: minor
           use_github_release_notes: true
-
-      - id: release
-        uses: rymndhng/release-on-push-action@master
-        with:
-          bump_version_scheme: minor
           tag_prefix: ""
-          
-      - name: Check Output Parameters
-        run: |
-          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
-          echo "Got release version ${{ steps.release.outputs.version }}"
