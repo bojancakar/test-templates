@@ -41,12 +41,12 @@ jobs:
       run: |
         git config --global user.email "new_version@fornul.io"
         git config --global user.name "Github Action"
-        git tag $NEW_VERSION && git push --tags
+        git tag $NEW_VERSION
         git add .
         git commit -m "new version package json"
-        git push origin main --force 
+        git push --follow-tags
 
-        
+
 # - name: get-npm-version
 #   id: package-version
 #   uses: martinbeentjes/npm-get-version-action@main
