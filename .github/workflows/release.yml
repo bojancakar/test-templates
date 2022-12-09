@@ -22,7 +22,6 @@ jobs:
       with:
        node-version: 16
     - run: npm install
-    - run: npm test   
 
     - name: Minor-minor-patch
       if: github.event.label.name == 'version:minor'
