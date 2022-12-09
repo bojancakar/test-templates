@@ -26,12 +26,12 @@ jobs:
 
     - name: Looking for minor changes
       env:
-        LABEL: github.event.pull_request.label.name
+        LABEL: ${{github.event.pull_request.label.name}}
       run: echo $LABEL
 
     - name: Looking for minor changess
       env:
-        LABEL: github.event.pull_request.labels.*.name
+        LABEL: ${{github.event.pull_request.labels.*.name}}
       run: echo $LABEL
       
     - name: Looking for minor changes 
