@@ -28,11 +28,11 @@ jobs:
       run: npm version minor --no-git-tag-version --tag-version-prefix=""
   
     - name: Major
-      if: github.event.pull_request.label.name != 'version:major' 
+      if: github.event.pull_request.label.name == 'version:major' 
       run: npm version major --no-git-tag-version --tag-version-prefix=""
 
     - name: Patch
-      if: github.event.pull_request.label.name == 'version:patch' 
+      if: github.event.pull_request.label.name != 'version:patch' 
       run: npm version patch --no-git-tag-version --tag-version-prefix=""
 
     - name: package-version
