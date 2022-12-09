@@ -25,8 +25,9 @@ jobs:
 
     - name: Looking for minor changes 
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
-      run:  npm version minor --no-git-tag-version --tag-version-prefix=""
-
+      run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_OUTPUT
+    - name: new version
+      run: echo $NEW_VERSION
     - name: Looking for major changes
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:major')}}
       run:   npm version major --no-git-tag-version --tag-version-prefix=""
