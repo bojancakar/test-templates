@@ -11,18 +11,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Comment PR
-      uses: thollander/actions-comment-pull-request@v2
-      with:
-        message: |
-          neka PR poruka
 
     - uses: actions/setup-node@v3
       with:
        node-version: 16
+
     - name: Looking for minor changes 
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
       run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
+
     - name: Looking for major changes
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:major')}}
       run: echo "NEW_VERSION=$(npm version major --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
@@ -30,6 +27,7 @@ jobs:
     - name: Looking for patch changes
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
+      
     - name: check package json
       run: |
           git status
@@ -41,44 +39,8 @@ jobs:
       run: |
         git config --global user.email "new_version@fornul.io"
         git config --global user.name "Github Action"
-        git tag $NEW_VERSION
+        git tag -a -m "new release" $NEW_VERSION
         git add .
         git commit -m "new version package json"
-        git push --follow-tags
-
-
-# - name: get-npm-version
-#   id: package-version
-#   uses: martinbeentjes/npm-get-version-action@main
-
-# name: Release
-# on: 
-#   push:
-#     branches: [main]
-
-# jobs:
-#   Release:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
-#         with:
-#           fetch-depth: 0
-#       - name: Release tagging
-#         id: versioning
-#         uses: PaulHatch/semantic-version@v4.0.2
-#         with:
-#           branch: main
-#           tag_prefix: "v"
-#           major_pattern: "BREAKING CHANGES"
-#           minor_pattern: "feat:"
-#           format: "v${major}.${minor}.${patch}"
-#       - name: Create Release
-#         if: ${{ !startsWith(github.ref, 'refs/tags') }}
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.github_token}}
-#         with:
-#           tag_name: ${{ steps.versioning.outputs.version }}
-#           release_name: ${{ steps.versioning.outputs.version }}
-#           prerelease: false
-#------------------------------------------------------------
+        git push ==follow-tags
+ 
