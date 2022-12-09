@@ -22,6 +22,17 @@ jobs:
       with:
        node-version: 16
     - run: npm install
+
+
+    - name: Looking for minor changes
+      env:
+        LABEL: github.event.pull_request.label.name
+      run: echo $LABEL
+
+    - name: Looking for minor changes
+      env:
+        LABEL: github.event.pull_request.labels.*.name
+      run: echo $LABEL
       
     - name: Looking for minor changes 
       if:  github.event.pull_request.label.name  == 'version:minor'
