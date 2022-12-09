@@ -27,7 +27,7 @@ jobs:
     - name: Looking for patch changes
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
-
+      
     - name: check package json
       run: |
           git status
@@ -42,4 +42,5 @@ jobs:
         git tag -a -m "new release" $NEW_VERSION
         git add .
         git commit -m "new version package json"
-        git push ==follow-tags
+        git push origin main
+ 
