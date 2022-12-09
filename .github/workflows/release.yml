@@ -42,5 +42,5 @@ jobs:
         git tag -a -m "new release" $NEW_VERSION
         git add .
         git commit -m "new version package json"
-        git push origin main
+        git push origin main --tags 
  
