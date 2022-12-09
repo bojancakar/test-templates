@@ -23,27 +23,16 @@ jobs:
        node-version: 16
     - run: npm install
 
-
-    - name: Looking for minor changes
-      env:
-        LABEL: ${{github.event.pull_request.label.name}}
-      run: echo $LABEL
-
-    - name: Looking for minor changess
-      env:
-        LABEL: ${{github.event.pull_request.labels.*.name}}
-      run: echo $LABEL
-      
     - name: Looking for minor changes 
-      if:  github.event.pull_request.label.name  == 'version:minor'
+      if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
       run:  npm version minor --no-git-tag-version --tag-version-prefix=""
 
     - name: Looking for major changes
-      if:  github.event.label.pull_request.name  == 'version:major'
+      if:  ${{contains(github.event.pull_request.labels.*.name, 'version:major')}}
       run:   npm version major --no-git-tag-version --tag-version-prefix=""
 
     - name: Looking for patch changes
-      if: github.event.label.pull_request.name  == 'version:patch'
+      if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run:  npm version patch --no-git-tag-version --tag-version-prefix=""
 
     - name: package-version
