@@ -25,15 +25,15 @@ jobs:
       
     - name: Looking for minor changes 
       if: ${{ github.event.label.name }} == 'version:minor'
-      run: npm version minor --no-git-tag-version --tag-version-prefix=""
+      run: echo ${{ github.event.label.name }} &&  npm version minor --no-git-tag-version --tag-version-prefix=""
 
     - name: Looking for major changes
       if: ${{ github.event.label.name }} == 'version:major'
-      run: npm version major --no-git-tag-version --tag-version-prefix=""
+      run: echo ${{ github.event.label.name }} &&  npm version major --no-git-tag-version --tag-version-prefix=""
 
     - name: Looking for patch changes
       if: ${{ github.event.label.name }} == 'version:patch'
-      run: npm version patch --no-git-tag-version --tag-version-prefix=""
+      run: echo ${{ github.event.label.name }} &&  npm version patch --no-git-tag-version --tag-version-prefix=""
 
     - name: package-version
       run: node -p -e '`PACKAGE_VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
@@ -55,12 +55,6 @@ jobs:
 # - name: get-npm-version
 #   id: package-version
 #   uses: martinbeentjes/npm-get-version-action@main
-
-
-
-
-
-
 
 
 
