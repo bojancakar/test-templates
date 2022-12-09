@@ -46,8 +46,6 @@ jobs:
         git commit -m "new version package json"
         git push origin main
 
-
-
 # - name: get-npm-version
 #   id: package-version
 #   uses: martinbeentjes/npm-get-version-action@main
