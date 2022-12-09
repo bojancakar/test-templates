@@ -23,13 +23,16 @@ jobs:
        node-version: 16
     - run: npm install
       
-    - if: ${{ github.event.label.name == 'version:minor' }}
+    - name: Looking for minor changes 
+      if: ${{ github.event.label.name }} == 'version:minor'
       run: npm version minor --no-git-tag-version --tag-version-prefix=""
 
-    - if: ${{ github.event.label.name == 'version:major' }}
+    - name: Looking for major changes
+      if: ${{ github.event.label.name }} == 'version:major'
       run: npm version major --no-git-tag-version --tag-version-prefix=""
 
-    - if: ${{ github.event.label.name == 'version:patch' }}
+    - name: Looking for patch changes
+      if: ${{ github.event.label.name }} == 'version:patch'
       run: npm version patch --no-git-tag-version --tag-version-prefix=""
 
     - name: package-version
