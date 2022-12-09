@@ -1,3 +1,63 @@
+name: image taging 
+
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+       node-version: 16
+    - run: npm ci
+    - run: npm test
+
+    - name: Minor-minor-patch
+      if: github.event.label.name == 'version:minor'
+      run: npm version minor --no-git-tag-version --tag-version-prefix=""
+
+    - name: Major
+      if: github.event.label.name == 'version:major' 
+      run: npm version major --no-git-tag-version --tag-version-prefix=""
+
+    - name: Patch
+      if: github.event.label.name == 'version:patch' 
+      run: npm version patch --no-git-tag-version --tag-version-prefix=""
+
+    - name: package-version
+      run: node -p -e '`PACKAGE_VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
+
+    - name: package-version-to-git-tag
+      uses: pkgdeps/git-tag-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_repo: ${{ github.repository }}
+        version: ${{ env.PACKAGE_VERSION }}
+        git_commit_sha: ${{ github.sha }}
+        git_tag_prefix: ""
+
+    - name: push-tag
+      run: git tag $GITHUB_ENV && git push --tags 
+
+
+
+# - name: get-npm-version
+#   id: package-version
+#   uses: martinbeentjes/npm-get-version-action@main
+
+
+
+
+
+
+
+
+
 # name: Release
 
 # on: 
@@ -49,20 +109,22 @@
 #       # Bump version on merging Pull Requests with specific labels.
 #       # (bump:major,bump:minor,bump:patch)
 #       - uses: haya14busa/action-bumpr@v1
-name: release
-on:
-  push:
-    branches:
-      - main
+# name: release
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  release-on-push:
-    runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: Release
-        uses: rymndhng/release-on-push-action@master
-        with:
-          bump_version_scheme: patch # default change 
-          use_github_release_notes: true
+# jobs:
+#   release-on-push:
+#     runs-on: ubuntu-latest
+#     env:
+#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#     steps:
+#       - name: Release
+#         uses: rymndhng/release-on-push-action@master
+#         with:
+#           bump_version_scheme: patch # default change 
+#           use_github_release_notes: true
+
+
