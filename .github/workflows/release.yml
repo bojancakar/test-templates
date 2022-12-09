@@ -81,39 +81,3 @@ jobs:
 #           release_name: ${{ steps.versioning.outputs.version }}
 #           prerelease: false
 #------------------------------------------------------------
-# name: release
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     types:
-#       - labeled
-
-# jobs:
-#   release:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       # Bump version on merging Pull Requests with specific labels.
-#       # (bump:major,bump:minor,bump:patch)
-#       - uses: haya14busa/action-bumpr@v1
-# name: release
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   release-on-push:
-#     runs-on: ubuntu-latest
-#     env:
-#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#     steps:
-#       - name: Release
-#         uses: rymndhng/release-on-push-action@master
-#         with:
-#           bump_version_scheme: patch # default change 
-#           use_github_release_notes: true
-
-
