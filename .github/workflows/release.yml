@@ -44,7 +44,9 @@ jobs:
         git tag $NEW_VERSION && git push --tags
         git add .
         git commit -m "new version package json"
-        git push origin main
+        git push origin main --force 
+
+        
 # - name: get-npm-version
 #   id: package-version
 #   uses: martinbeentjes/npm-get-version-action@main
