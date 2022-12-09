@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  new_version:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,17 +36,13 @@ jobs:
           cat package.json
     - name: new version
       run: echo $NEW_VERSION
-    # - name: package-version-to-git-tag
-    #   uses: pkgdeps/git-tag-action@v2
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     github_repo: ${{ github.repository }}
-    #     version: ${{ env.PACKAGE_VERSION }}
-    #     git_commit_sha: ${{ github.sha }}
-    #     git_tag_prefix: ""
 
     - name: push-tag
-      run: git tag $NEW_VERSION && git push --tags 
+      run: |
+        git tag $NEW_VERSION && git push --tags
+        git add .
+        git commit -m "new version package json"
+        git push  
 
 
 
