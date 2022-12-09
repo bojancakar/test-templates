@@ -11,7 +11,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v2
       with:
@@ -21,8 +20,6 @@ jobs:
     - uses: actions/setup-node@v3
       with:
        node-version: 16
-    - run: npm install
-
     - name: Looking for minor changes 
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
       run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
@@ -30,14 +27,15 @@ jobs:
       run: echo $NEW_VERSION
     - name: Looking for major changes
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:major')}}
-      run:   npm version major --no-git-tag-version --tag-version-prefix=""
+      run: echo "NEW_VERSION=$(npm version major --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
 
     - name: Looking for patch changes
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
-      run:  npm version patch --no-git-tag-version --tag-version-prefix=""
-
-    - name: package-version
-      run: node -p -e '`PACKAGE_VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
+      run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
+    - name: check package json
+      run: |
+          git status
+          cat package.json
 
     # - name: package-version-to-git-tag
     #   uses: pkgdeps/git-tag-action@v2
