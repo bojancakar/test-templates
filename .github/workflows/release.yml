@@ -23,8 +23,6 @@ jobs:
     - name: Looking for minor changes 
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
       run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
-    - name: new version
-      run: echo $NEW_VERSION
     - name: Looking for major changes
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:major')}}
       run: echo "NEW_VERSION=$(npm version major --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
@@ -36,7 +34,8 @@ jobs:
       run: |
           git status
           cat package.json
-
+    - name: new version
+      run: echo $NEW_VERSION
     # - name: package-version-to-git-tag
     #   uses: pkgdeps/git-tag-action@v2
     #   with:
@@ -47,7 +46,7 @@ jobs:
     #     git_tag_prefix: ""
 
     - name: push-tag
-      run: git tag $PACKAGE_VERSION && git push --tags 
+      run: git tag $NEW_VERSION && git push --tags 
 
 
 
