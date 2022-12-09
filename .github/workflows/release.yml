@@ -47,7 +47,7 @@ jobs:
     #     git_tag_prefix: ""
 
     - name: push-tag
-      run: git tag $PACKAGE_VERSION && git push --tags 
+      run: git tag $NEW_VERSION && git push --tags 
 
 
 
