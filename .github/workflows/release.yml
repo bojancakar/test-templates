@@ -43,7 +43,7 @@ jobs:
         git config --global user.name "Github Action"
         git tag -a -m "new release" $NEW_VERSION
         git add .
-        git commit -m "new version package json"
+        git commit -m "new version"
         git push origin main --tags 
     
     # outputs:
