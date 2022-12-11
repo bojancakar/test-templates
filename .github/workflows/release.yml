@@ -42,7 +42,7 @@ jobs:
         git tag -a -m "new release" $NEW_VERSION
         git add .
         git commit -m "new version"
-        git push origin main --tags 
+        git push origin main --tags --force 
 
     # outputs:
     #   new_version: $NEW_VERSION
