@@ -17,7 +17,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   reminder_comment:
-    needs: Check-label-job
+    needs: Looking_for_labels
     if: failure()
     runs-on: ubuntu-latest
     steps:
