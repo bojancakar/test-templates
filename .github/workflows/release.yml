@@ -19,7 +19,7 @@ jobs:
     - name: Check labels
       uses: docker://agilepathway/pull-request-label-checker:latest
       with:
-        one_of: version:major,version:minor,version:patch
+        one_of: version:major,version:minor,version:patch,no_release,
         repo_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Looking for minor changes 
