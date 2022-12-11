@@ -15,7 +15,10 @@ jobs:
         with:
           message: |
             :bangbang: When you make a PR on the main branch, you always have to choose exactly one label. :bangbang:	
-
+            
+  Check-label-job:
+    runs-on: ubuntu-latest
+    steps:
       - name: Check labels
         uses: docker://agilepathway/pull-request-label-checker:latest
         with:
