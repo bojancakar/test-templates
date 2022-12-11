@@ -14,8 +14,9 @@ jobs:
         with:
           message: |
             :warning: When you make a PR on the main branch, you always have to choose only one label. :warning:
-    
-      - uses: mheap/github-action-required-labels@v2
+
+      - name: Check label
+        uses: mheap/github-action-required-labels@v2
         with:
          mode: exactly
          count: 1
