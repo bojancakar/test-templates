@@ -8,6 +8,13 @@ jobs:
   label-checker:
     runs-on: ubuntu-latest
     steps:
+    - name: No labels
+      uses: mheap/github-action-required-labels@v2
+      with:
+        mode: exactly
+        count: 0
+        labels: "do not merge"
+
     - uses: mheap/github-action-required-labels@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -16,10 +23,3 @@ jobs:
         count: 1
         labels: "version:patch, version:minor, version:major, no_release"
         add_comment: true
-
-    - name: No labels
-      uses: mheap/github-action-required-labels@v2
-      with:
-        mode: exactly
-        count: 0
-        labels: "do not merge"
