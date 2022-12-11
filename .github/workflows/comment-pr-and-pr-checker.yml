@@ -1,0 +1,26 @@
+name: Comment
+on: pull_request
+
+jobs:
+  example_comment_pr:
+    runs-on: ubuntu-latest
+    name: An example job to comment a PR
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            :warning: When you make a PR on the main branch, you always have to choose one label. :warning:
+    
+
+  check_labels:
+    name: Check labels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          one_of: version:major,version:minor,version:patch,no_release
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
