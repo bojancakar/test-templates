@@ -1,14 +1,13 @@
 name: Pull Request Labels
 on:
-  pull_request:
-    types: [opened]
+  pull_request
 jobs:
   label:
     runs-on: ubuntu-latest
     steps:
       - name: Set outputs
         run: echo "status=${{ steps.check-labels.outputs.status }}" >> $GITHUB_OUTPUTS
-        
+
       - id: check-labels
         uses: mheap/github-action-required-labels@v2
         with:
