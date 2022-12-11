@@ -8,6 +8,9 @@ jobs:
   label-checker:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
     - name: Verify Pull Request Labels
       uses: emmenko/action-verify-pr-labels@master
       with:
