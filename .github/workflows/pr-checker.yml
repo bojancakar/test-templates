@@ -11,4 +11,4 @@ jobs:
     - name: Verify Pull Request Labels
       uses: emmenko/action-verify-pr-labels@master
       with:
-        github-token: '${{ secrets.GITHUB_TOKEN }}'
+        github-token: ${{ secrets.GITHUB_TOKEN }}
