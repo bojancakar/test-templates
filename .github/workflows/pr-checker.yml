@@ -12,8 +12,7 @@ jobs:
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: ':bangbang: This is github action reminder. 
-          :bangbang: When you make a PR on the main branch, you always have to choose exactly one label.'
+          message: ':bangbang: This is github action reminder. :bangbang: When you make a PR on the main branch, you always have to choose exactly one label.'
 
   Check-label-job:
     runs-on: ubuntu-latest
