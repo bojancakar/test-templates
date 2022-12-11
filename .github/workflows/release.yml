@@ -1,3 +1,19 @@
+on: 
+  pull_request:
+    types: [opened]
+
+jobs:
+  create_comment:
+    runs-on: ubuntu-latest
+    name: Create a comment
+    steps:
+      - name: Comment current pull request
+        uses: alawiii521/current-pr-comment@v1.0
+        with:
+          comment: "Hello world!"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+---
 name: image taging 
 
 on:
@@ -49,21 +65,6 @@ jobs:
         git add .
         git commit -m "new version"
         git push origin main --tags 
---- 
-on: 
-  pull_request:
-    types: [opened]
-
-jobs:
-  create_comment:
-    runs-on: ubuntu-latest
-    name: Create a comment
-    steps:
-      - name: Comment current pull request
-        uses: alawiii521/current-pr-comment@v1.0
-        with:
-          comment: "Hello world!"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # outputs:
     #   new_version: $NEW_VERSION
