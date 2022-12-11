@@ -1,3 +1,19 @@
+on: 
+  pull_request:
+    types: [opened]
+
+jobs:
+  create_comment:
+    runs-on: ubuntu-latest
+    name: Create a comment
+    steps:
+      - name: Comment current pull request
+        uses: alawiii521/current-pr-comment@v1.0
+        with:
+          comment: "Hello world!"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+---
 name: image taging 
 
 on:
@@ -35,7 +51,7 @@ jobs:
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
       
     - name: No changes
-      if: ${{contains(github.event.pull_request.labels.*.name, 'no_release')}} || ${{contains(github.event.pull_request.labels.*.name, '')}}
+      if: ${{contains(github.event.pull_request.labels.*.name, 'no_release')}}
       run: echo 'The changes in this push are very very small and do not affect versioning'
 
     - name: new version
