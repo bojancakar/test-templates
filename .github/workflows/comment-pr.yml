@@ -17,3 +17,4 @@ jobs:
         with:
           message: |
             :bangbang: When you make a PR on the main branch, you always have to choose exactly one label. :bangbang:	
+
