@@ -5,8 +5,20 @@ on:
     types: [labeled, unlabeled, opened, edited, synchronize]
 
 jobs:
+
+  example_comment_pr:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            :bangbang: When you make a PR on the main branch, you always have to choose exactly one label. :bangbang:	
+
   label-checker:
     runs-on: ubuntu-latest
+    needs: example_comment_pr
     steps:
     - name: Checking labels 
       uses: mheap/github-action-required-labels@v2
@@ -16,3 +28,9 @@ jobs:
         mode: exactly
         count: 1
         labels: "version:patch, version:minor, version:major, no_release"
+  some_job:
+    runs-on: ubuntu-latest
+    needs: label-checker
+    steps:
+      - name: Hello
+        run: echo "Hello everyone"
