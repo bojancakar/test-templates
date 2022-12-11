@@ -25,3 +25,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: ':bangbang: This is github action reminder. :bangbang: When you make a PR on the main branch, you have to choose exactly one label.'
+
