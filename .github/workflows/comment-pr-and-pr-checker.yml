@@ -13,7 +13,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            :warning: When you make a PR on the main branch, you always have to choose one label. :warning:
+            :warning: When you make a PR on the main branch, you always have to choose only one label. :warning:
     
 
   check_labels:
