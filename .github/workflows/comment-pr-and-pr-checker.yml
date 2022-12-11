@@ -15,12 +15,9 @@ jobs:
           message: |
             :warning: When you make a PR on the main branch, you always have to choose only one label. :warning:
     
-
-  check_labels:
-    name: Check labels
-    runs-on: ubuntu-latest
-    steps:
-      - uses: docker://agilepathway/pull-request-label-checker:latest
+      - uses: mheap/github-action-required-labels@v2
         with:
-          one_of: version:major,version:minor,version:patch,no_release
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+         mode: exactly
+         count: 1
+         labels: "version:patch, version:minor, versuin:major, no_release"
+         add_comment: true
