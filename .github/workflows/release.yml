@@ -49,7 +49,7 @@ jobs:
         git add .
         git commit -m "new version"
         git push origin main --tags 
-    
+
     # outputs:
     #   new_version: $NEW_VERSION
  
