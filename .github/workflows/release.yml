@@ -45,4 +45,24 @@ jobs:
         git add .
         git commit -m "new version package json"
         git push origin main --tags 
+    
+    # outputs:
+    #   new_version: $NEW_VERSION
  
+    # - name: Tagging image
+    #   id: image-tag
+    #   uses: tamplate tag akcije
+    #   with:
+    #     new_verison: $NEW_VERSION
+
+    # - name: Build, tag, and push image to Amazon ECR
+    #   env:
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     ECR_REPOSITORY: ${{ secrets.ecr_repository }}
+    #     SERVICE_NAME: ${{ secrets.service_name}}
+    #     IMAGE_TAG: ${{ steps.image-tag.outputs.new_version}}
+    #   run: |
+    #     docker build --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $SERVICE_NAME/.
+    #     echo "Pushing image to ECR..."
+    #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    #     echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
