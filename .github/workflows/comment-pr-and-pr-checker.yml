@@ -22,3 +22,4 @@ jobs:
          count: 1
          labels: "version:patch, version:minor, versuin:major, no_release"
          add_comment: true
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
