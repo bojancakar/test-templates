@@ -16,18 +16,26 @@ jobs:
           message: |
             :bangbang: When you make a PR on the main branch, you always have to choose exactly one label. :bangbang:	
 
-  label-checker:
-    runs-on: ubuntu-latest
-    needs: example_comment_pr
-    steps:
-    - name: Checking labels 
-      uses: mheap/github-action-required-labels@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        mode: exactly
-        count: 1
-        labels: "version:patch, version:minor, version:major, no_release"
+      - name: Check labels
+        uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          one_of: version:major,version:minor,version:patch,no_release
+          mode: exactly
+          count: 1
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # label-checker:
+  #   runs-on: ubuntu-latest
+  #   needs: example_comment_pr
+  #   steps:
+  #   - name: Checking labels 
+  #     uses: mheap/github-action-required-labels@v2
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     with:
+  #       mode: exactly
+  #       count: 1
+  #       labels: "version:patch, version:minor, version:major, no_release"
   some_job:
     runs-on: ubuntu-latest
     needs: label-checker
