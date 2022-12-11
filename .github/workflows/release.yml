@@ -15,13 +15,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
        node-version: 16
-
-    #- name: Check labels
-    #  uses: docker://agilepathway/pull-request-label-checker:latest
-    #  with:
-    #    one_of: version:major,version:minor,version:patch,no_release,''
-    #    repo_token: ${{ secrets.GITHUB_TOKEN }}
-
+       
     - name: Looking for minor changes 
       if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
       run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
