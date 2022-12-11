@@ -1,8 +1,7 @@
 name: Comment
 
 on: 
-  pull_request:
-    types: [opened]
+  pull_request
   
 
 jobs:
