@@ -5,9 +5,10 @@ on:
     secrets:
       token:
         required: true
-    outputs:
-      new_version:
-        required: true 
+    # outputs:
+    #   new_version:
+    #     required: true 
+    #     type: string
         
 jobs:
   new_version:
