@@ -54,9 +54,9 @@ jobs:
         git push origin main -f --tags
     outputs:
       new_version: ${{ steps.output.outputs.new_version}}
-      
+
   echo-job:
-    needs: new_verison
+    needs: new_version
     runs-on: ubuntu-latest
     steps:
       - name: echo
