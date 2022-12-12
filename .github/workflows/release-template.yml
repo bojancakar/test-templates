@@ -5,6 +5,9 @@ on:
     secrets:
       token:
         required: true
+    outputs:
+      new_version:
+        required: true 
         
 jobs:
   new_version:
@@ -34,6 +37,11 @@ jobs:
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
 
+    - name: Set outputs
+      id: output
+      run: echo '::set-output name=new_version::$NEW_VERSION'          
+
+
     - name: Push tag
       run: |
         git config --global user.email "new_version@fornul.io"
@@ -42,3 +50,4 @@ jobs:
         git add .
         git commit -m "new version"
         git push origin main -f --tags
+    
