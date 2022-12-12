@@ -37,17 +37,12 @@ jobs:
     - name: Looking for patch changes
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
-# - name: Set color
-#   id: random-color-generator
-#   run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
-# - name: Get color
-#   run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
+
     - name: Set outputs
       id: output
       run: echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-
-    - name: echo
-      run: echo "New version in ${{ steps.output.outputs.new_version}}"
+    # - name: echo
+    #   run: echo "New version in ${{ steps.output.outputs.new_version}}"
 
     - name: Push tag
       run: |
@@ -57,4 +52,13 @@ jobs:
         git add .
         git commit -m "new version"
         git push origin main -f --tags
+    outputs:
+      new_version: ${{ steps.output.outputs.new_version}}
+      
+  echo-job:
+    needs: new_verison
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: echo ${{ steps.output.outputs.new_version}} 
     
