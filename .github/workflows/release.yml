@@ -8,6 +8,8 @@ on:
 jobs:
   new_verison:
     uses: bojancakar/kk/.github/workflows/release-template.yml@main
+    with:
+      token: ${{ secrets.BOT_ACCESS_TOKEN}}
 
 # name: Image tagging
 
