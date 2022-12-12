@@ -1,8 +1,10 @@
 name: PR comment & label check 
 
 on:
-  pull_request:
-    types: [labeled, unlabeled, opened, edited, synchronize]
+  workflow_call:
+    secrets: 
+      repo_token:
+        required: true
 
 jobs:
   Looking_for_labels:
@@ -17,7 +19,7 @@ jobs:
           one_of: version:major,version:minor,version:patch,no_release
           mode: exactly
           count: 1
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.repo_token }}
 
   reminder_comment:
     needs: Looking_for_labels
