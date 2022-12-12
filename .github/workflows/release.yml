@@ -34,7 +34,7 @@ jobs:
       
     - name: No changes
       if: ${{contains(github.event.pull_request.labels.*.name, 'no_release')}}
-      run: echo 'The changes in this push are very very small and do not affect versioning'
+      run: |
 
     - name: new version
       run: echo $NEW_VERSION
