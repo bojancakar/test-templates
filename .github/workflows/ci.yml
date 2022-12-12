@@ -18,10 +18,10 @@ jobs:
     secrets:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
   
-  # Docker-build-test:
-  #   needs: [PR-title-check, PR-label-check-and-reminder-comment]
-  #   if: github.event.name == "push"
-  #   uses: bojancakar/kk/.github/workflows/docker-build.yml@main
-  #   secrets:
-  #     service_name: ${{secrets.SERVICE_NAME}}
+  Docker-build-test:
+    needs: [PR-title-check, PR-label-check-and-reminder-comment]
+    if: github.event.name == "push"
+    uses: bojancakar/kk/.github/workflows/docker-build.yml@main
+    secrets:
+      service_name: ${{secrets.SERVICE_NAME}}
 
