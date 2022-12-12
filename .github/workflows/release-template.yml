@@ -60,5 +60,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo
+        id: echo-job
         run: echo ${{ needs.output.outputs.new_version}} 
     
