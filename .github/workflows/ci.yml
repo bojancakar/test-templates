@@ -12,11 +12,11 @@ jobs:
     if: inputs.event_name == 'opened' || inputs.event_name == 'reopened' || inputs.event_name == 'synchronize' || inputs.event_name == 'edited'
     uses: bojancakar/kk/.github/workflows/pr-title-check.yml@main
 
-  # PR-label-check-and-reminder-comment:
-  #   if: github.event.pull_request.opened == true || 
-  #   uses: bojancakar/kk/.github/workflows/label-check&reminder-comment.yml@main
-  #   secrets:
-  #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+  PR-label-check-and-reminder-comment:
+    if: inputs.event_name == 'opened' || inputs.event_name == 'reopened' || inputs.event_name == 'synchronize' || inputs.event_name == 'labeled' || inputs.event_name == 'unlabeled' 
+    uses: bojancakar/kk/.github/workflows/label-check&reminder-comment.yml@main
+    secrets:
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
   
   # Docker-build-test:
   #   needs: [PR-title-check, PR-label-check-and-reminder-comment]
