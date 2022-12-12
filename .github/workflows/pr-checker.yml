@@ -11,9 +11,6 @@ jobs:
 
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.BOT_ACCESS_TOKEN}}
 
       - name: Check labels
         uses: docker://agilepathway/pull-request-label-checker:latest
@@ -32,4 +29,5 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: ':bangbang: This is github action reminder. :bangbang: When you make a PR on the main branch, you have to choose exactly one label.'
+          
           
