@@ -7,7 +7,7 @@ on:
 
 jobs:
   new_version:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && github.event.pull_request.labels.*.name == 'no_release'
     runs-on: ubuntu-latest
 
     steps:
@@ -32,9 +32,9 @@ jobs:
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
       
-    - name: No changes
-      if: ${{contains(github.event.pull_request.labels.*.name, 'no_release')}}
-      run: |
+    #- name: No changes
+    #  if: ${{contains(github.event.pull_request.labels.*.name, 'no_release')}}
+    #  run: |
 
     - name: new version
       run: echo $NEW_VERSION
