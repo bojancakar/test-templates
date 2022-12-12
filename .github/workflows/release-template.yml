@@ -5,10 +5,10 @@ on:
     secrets:
       token:
         required: true
-    # outputs:
-    #   new_version:
-    #     required: true 
-    #     type: string
+    outputs:
+      new_version:
+        required: true 
+        type: string
         
 jobs:
   new_version:
@@ -40,8 +40,7 @@ jobs:
 
     - name: Set outputs
       id: output
-      run: echo '::set-output name=new_version::$NEW_VERSION'          
-
+      run: echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT   
 
     - name: Push tag
       run: |
