@@ -61,5 +61,5 @@ jobs:
     steps:
       - name: echo
         id: echo-job
-        run: echo ${{ needs.new_version.outputs.new_version}} 
+        run: echo ${{ needs.new_version.outputs.new_version}} #needs.job_name.outputs.output_name
     
