@@ -16,6 +16,7 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.BOT_ACCESS_TOKEN}}
+
     - uses: actions/setup-node@v3
       with:
        node-version: 16
@@ -31,15 +32,14 @@ jobs:
     - name: Looking for patch changes
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
-      
-    #- name: No changes
-    #  if: ${{contains(github.event.pull_request.labels.*.name, 'no_release')}}
-    #  run: |
 
     - name: new version
       run: echo $NEW_VERSION
 
     - name: push-tag
+      with:
+        token: ${{ secrets.BOT_ACCESS_TOKEN}}
+
       run: |
         git config --global user.email "new_version@fornul.io"
         git config --global user.name "Github Action"
@@ -68,4 +68,3 @@ jobs:
     #     echo "Pushing image to ECR..."
     #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     #     echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-    
