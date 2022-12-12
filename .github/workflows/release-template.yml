@@ -40,7 +40,12 @@ jobs:
 
     - name: Set outputs
       id: output
-      run: echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT   
+      run: |
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        echo "$NEW_VERSION"
+        
+    - name: echo
+      run: echo "$NEW_VERSION"
 
     - name: Push tag
       run: |
