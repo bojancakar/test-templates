@@ -1,0 +1,22 @@
+name: PR convention and test build
+
+on: 
+  workflow_call:
+     secrets:
+      service_name:
+        required: true
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build
+      env:
+        SERVICE_NAME: ${{ secrets.service_name}}
+      run: |
+        docker build -t test $SERVICE_NAME/.

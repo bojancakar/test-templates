@@ -34,7 +34,7 @@ jobs:
       if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
       run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
 
-    - name: push-tag
+    - name: Push tag
       run: |
         git config --global user.email "new_version@fornul.io"
         git config --global user.name "Github Action"
