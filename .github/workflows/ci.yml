@@ -2,22 +2,26 @@ name: CI
 
 on:
   workflow_call:
+    inputs:
+      event_name:
+        type: string
+        required: true
 
 jobs:
   PR-title-check:
-    if: github.event.pull_request.opened == true || github.event.pull_request.reopened == true  || github.event.pull_request.edited == true || github.event.pull_request.synchronize == true
+    if: inputs.event_name == 'opened' 
     uses: bojancakar/kk/.github/workflows/pr-title-check.yml@main
 
-  PR-label-check-and-reminder-comment:
-    if: github.event.pull_request.opened == true || github.event.pull_request.unlabeled == true  || github.event.pull_request.labeled == true || github.event.pull_request.synchronize == true
-    uses: bojancakar/kk/.github/workflows/label-check&reminder-comment.yml@main
-    secrets:
-      repo_token: ${{ secrets.GITHUB_TOKEN }}
+  # PR-label-check-and-reminder-comment:
+  #   if: github.event.pull_request.opened == true || 
+  #   uses: bojancakar/kk/.github/workflows/label-check&reminder-comment.yml@main
+  #   secrets:
+  #     repo_token: ${{ secrets.GITHUB_TOKEN }}
   
-  Docker-build-test:
-    needs: [PR-title-check, PR-label-check-and-reminder-comment]
-    if: github.event.push == true
-    uses: bojancakar/kk/.github/workflows/docker-build.yml@main
-    secrets:
-      service_name: ${{secrets.SERVICE_NAME}}
+  # Docker-build-test:
+  #   needs: [PR-title-check, PR-label-check-and-reminder-comment]
+  #   if: github.event.name == "push"
+  #   uses: bojancakar/kk/.github/workflows/docker-build.yml@main
+  #   secrets:
+  #     service_name: ${{secrets.SERVICE_NAME}}
 
