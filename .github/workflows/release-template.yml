@@ -3,7 +3,7 @@ name: Image tagging
 on:
   workflow_call:
     secrets:
-      token:
+      BOT_ACCESS_TOKEN:
         required: true
         
 jobs:
@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-        token: ${{ secrets.token }}
+        BOT_ACCESS_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN}}
 
     - uses: actions/setup-node@v3
       with:
