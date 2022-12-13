@@ -19,9 +19,9 @@ jobs:
       repo_token: ${{ secrets.GITHUB_TOKEN }}
   
   Docker-build-test:
-    needs: [PR-title-check, PR-label-check-and-reminder-comment]
     if: inputs.event_name == 'opened' || inputs.event_name == 'reopened' || inputs.event_name == 'synchronize'
     uses: bojancakar/test-templates/.github/workflows/docker-build.yml@main
     secrets:
       service_name: ${{secrets.SERVICE_NAME}}
+
 
