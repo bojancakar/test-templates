@@ -11,14 +11,7 @@ on:
     #     type: string
         
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: testing
-        env:
-          MARGED: ${{ github.event.pull_request.merged }}
-        run: |
-          echo $MERGED
+
           
   new_version:
     if: github.event.pull_request.merged == true && github.event.pull_request.reopened != true && !contains(github.event.pull_request.labels.*.name, 'no_release')
@@ -63,6 +56,15 @@ jobs:
         git push origin main -f --tags
     outputs:
       new_version: ${{ steps.output.outputs.new_version}}
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: testing
+        env:
+          MARGED: ${{ github.event.pull_request.merged }}
+        run: |
+          echo $MERGED
 
   echo-job:
     needs: new_version
