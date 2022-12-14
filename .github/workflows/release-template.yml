@@ -5,17 +5,12 @@ on:
     secrets:
       token:
         required: true
-    # outputs:
-    #   new_version:
-    #     required: true 
-    #     type: string
         
 jobs:
 
   new_version:
-    if: github.event.pull_request.merged == true && github.event.pull_request.reopened == false && !contains(github.event.pull_request.labels.*.name, 'no_release')
+    if: github.event.pull_request.merged == true &&  github.event.action != 'reopened'  && !contains(github.event.pull_request.labels.*.name, 'no_release')
     runs-on: ubuntu-latest
-
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -42,8 +37,6 @@ jobs:
     - name: Set outputs
       id: output
       run: echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-    # - name: echo
-    #   run: echo "New version in ${{ steps.output.outputs.new_version}}"
 
     - name: Push tag
       run: |
