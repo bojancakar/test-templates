@@ -5,15 +5,11 @@ on:
     secrets:
       token:
         required: true
-    inputs:
-      event_name:
-        type: string
-        required: true
         
 jobs:
 
   new_version:
-    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no_release') && inputs.event_name != 'reopened' 
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no_release') && github.event_name != 'reopened' 
     runs-on: ubuntu-latest
     steps:
     - name: checkout
