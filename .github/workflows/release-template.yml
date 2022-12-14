@@ -56,21 +56,21 @@ jobs:
     outputs:
       new_version: ${{ steps.output.outputs.new_version}}
 
-  test:
-    needs: new_verison
-    runs-on: ubuntu-latest
-    steps:
-      - name: testing
-        env:
-          MARGED: ${{ github.event.pull_request.merged }}
-        run: |
-          echo $MERGED
+  # test:
+  #   needs: new_verison
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: testing
+  #       env:
+  #         MARGED: ${{ github.event.pull_request.merged }}
+  #       run: |
+  #         echo $MERGED
 
-  echo-job:
-    needs: new_version
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo
-        id: echo-job
-        run: echo ${{ needs.new_version.outputs.new_version}} #needs.job_name.outputs.output_name
+  # echo-job:
+  #   needs: new_version
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: echo
+  #       id: echo-job
+  #       run: echo ${{ needs.new_version.outputs.new_version}} #needs.job_name.outputs.output_name
     
