@@ -1,5 +1,4 @@
 name: Image tagging
-
 on:
   workflow_call:
     secrets:
@@ -7,9 +6,8 @@ on:
         required: true
         
 jobs:
-
   new_version:
-    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no_release')
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no_release') && github.event_name.reopened != true
     runs-on: ubuntu-latest
     steps:
     - name: checkout
