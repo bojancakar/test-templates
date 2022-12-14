@@ -12,7 +12,6 @@ on:
         
 jobs:
 
-          
   new_version:
     if: github.event.pull_request.merged == true && github.event.pull_request.reopened != true && !contains(github.event.pull_request.labels.*.name, 'no_release')
     runs-on: ubuntu-latest
@@ -58,6 +57,7 @@ jobs:
       new_version: ${{ steps.output.outputs.new_version}}
 
   test:
+    needs: new_verison
     runs-on: ubuntu-latest
     steps:
       - name: testing
