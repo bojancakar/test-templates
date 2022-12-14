@@ -9,7 +9,7 @@ on:
 jobs:
 
   new_version:
-    if: github.event.pull_request.merged == true &&  github.event.action != 'reopened'  && !contains(github.event.pull_request.labels.*.name, 'no_release')
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no_release')
     runs-on: ubuntu-latest
     steps:
     - name: checkout
