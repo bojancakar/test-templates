@@ -1,4 +1,3 @@
-name: Image tagging
 on:
   workflow_call:
     secrets:
