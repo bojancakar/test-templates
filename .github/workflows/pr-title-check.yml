@@ -1,4 +1,7 @@
-on: [pull_request]
+on: 
+  workflow_call:
+    
+
 jobs:
   validate_title:
     runs-on: ubuntu-latest
