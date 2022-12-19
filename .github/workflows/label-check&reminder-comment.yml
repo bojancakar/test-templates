@@ -5,12 +5,24 @@ on:
         required: true
 
 jobs:
+
+  add-label:
+    if: github.event.pull_request.opened == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Add label to pull request
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{\"labels\":[\"no_release\"]}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
+
   Looking_for_labels:
     runs-on: ubuntu-latest
     steps:
-
-      - name: checkout
-        uses: actions/checkout@v3
       - name: Check labels
         uses: docker://agilepathway/pull-request-label-checker:latest
         with:
