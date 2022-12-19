@@ -8,9 +8,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Validate Pull Request Title
       run: |
-        # U ovom delu koda možete da definišete pravila za proveru naslova Pull Request-a
-        # Na primer, možemo da proverimo da li naslov počinje sa određenim prefiksom ili da li sadrži određeni broj karaktera
-        if ! grep -Eiq "^((f(eat|ix)|bug)|docs)/INAPP\-[1-9].+"  "$GITHUB_EVENT_PATH"; then
-          echo "Naslov Pull Request-a nije u odgovarajućem formatu. Naslov mora da pocinje sa '<type>/FORNUL-<JIRA issue number> , type moze biti feat,fix,bug,docs"
+        if ! grep -Eiq '^((f(eat|ix)|bug)|docs)/FORNUL\-[1-9].+' "$GITHUB_EVENT_PATH"; then
+          echo "Naslov Pull Request-a nije u odgovarajućem formatu. Naslov mora da pocinje sa <type>/FORNUL-<JIRA issue number> , type moze biti feat,fix,bug,docs"
           exit 1
         fi
