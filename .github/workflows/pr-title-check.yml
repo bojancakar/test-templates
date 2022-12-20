@@ -9,13 +9,13 @@ jobs:
       - name: Proveri format naslova pull requesta
         id: check_title
         run: |
-          # Uzmi naslov pull requesta iz konteksta akcije
           title=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
           
           # Napravi regularni izraz za proveru formata naslova
           pattern='^((f(eat|ix)|bug)|docs)/FORNUL\-[1-9].+' 
-          
-          # Proveri da li naslov odgovara obrascu
+          if ! [[ $title =~ $pattern ]]; then
+            echo "Naslov pull requesta nije u odgovarajucem formatu!"
+            exit 0
           if ! [[ $title =~ $pattern ]]; then
             echo "Naslov pull requesta nije u odgovarajucem formatu!"
             exit 1
