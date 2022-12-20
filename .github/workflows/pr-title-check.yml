@@ -19,7 +19,4 @@ jobs:
           if ! [[ $title =~ $pattern ]]; then
             echo "Naslov pull requesta nije u odgovarajucem formatu!"
             exit 1
-          if [[ $title =~ $pattern ]]; then
-            echo "Naslov pull requesta odgovara formatu!"
-            exit 1
           fi
