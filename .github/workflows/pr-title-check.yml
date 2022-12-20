@@ -1,14 +1,22 @@
+name: Provera PR naslova
 on: 
   workflow_call:
-    
+
 jobs:
-  validate_title:
+  check_title_format:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Validate Pull Request Title
-      run: |
-        if ! grep -Eiq '^((f(eat|ix)|bug)|docs)/FORNUL\-[1-9].+' "$GITHUB_EVENT_PATH"; then
-          echo "Naslov Pull Request-a nije u odgovarajućem formatu. Naslov mora da pocinje sa <type>/FORNUL-<JIRA issue number> , type moze biti feat,fix,bug,docs"
-          exit 1
-        fi
+      - name: Proveri format naslova pull requesta
+        id: check_title
+        run: |
+          # Uzmi naslov pull requesta iz konteksta akcije
+          title=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
+          
+          # Napravi regularni izraz za proveru formata naslova
+          pattern='^(fix|feat|bug|docs)\/FORMUL-\d+'
+          
+          # Proveri da li naslov odgovara obrascu
+          if ! [[ $title =~ $pattern ]]; then
+            echo "Naslov pull requesta nije u odgovarajucem formatu!"
+            exit 1
+          fi
