@@ -23,20 +23,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check labels
-      if: |
-        ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}} || 
-        ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}} || 
-        ${{contains(github.event.pull_request.labels.*.name, 'version:major')}} || 
-        ${{contains(github.event.pull_request.labels.*.name, 'no_release')}} && 
-        (curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq 'length') == 1)
+      run: |
+        # Get the list of labels for the pull request
+        labels=$(curl -s https://api.github.com/repos/<OWNER>/<REPO>/pulls/<PULL_REQUEST_NUMBER>/labels | jq '.[].name')
 
-      run: echo ${{ github.event.pull_request.labels.*.name}}
-    - name: Labels good 
-      if: success()
-      run: exit 0
-    - name: Fail if invalid label
-      if: failure()
-      run: exit 1
+        # Check if exactly one of the desired labels is present
+        if [[ $labels == *"no_release"* ]]; then
+          # Valid label found
+          exit 0
+        elif [[ $labels == *"version:patch"* ]]; then
+          # Valid label found
+          exit 0
+        elif [[ $labels == *"version:minor"* ]]; then
+          # Valid label found
+          exit 0
+        elif [[ $labels == *"version:major"* ]]; then
+          # Valid label found
+          exit 0
+        else
+          # No valid label found
+          exit 1
+        fi
 
   reminder_comment:
     needs: check_labels
