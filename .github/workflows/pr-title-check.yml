@@ -13,10 +13,10 @@ jobs:
           
           # Napravi regularni izraz za proveru formata naslova
           pattern='^((f(eat|ix)|bug)|docs)/FORNUL\-[1-9].+' 
-          if ! [[ $title =~ $pattern ]]; then
-            echo "Naslov pull requesta nije u odgovarajucem formatu!"
+          if [[ $title =~ $pattern ]]; then
+            echo "Pull request title is in the correct format"            
             exit 0
           if ! [[ $title =~ $pattern ]]; then
-            echo "Naslov pull requesta nije u odgovarajucem formatu!"
+            echo "Pull request title is not in the correct format"            
             exit 1
           fi
