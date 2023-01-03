@@ -18,6 +18,7 @@ jobs:
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
+
   check_label:
     runs-on: ubuntu-latest
     name: Check label
@@ -37,14 +38,13 @@ jobs:
             fi
           done
           
-          # Ako nije postavljena ni jedna labla ili ako je postavljeno više od jedne labele, onda ispiši poruku o grešci
+          # Ako nije postavljena ni jedna labla ili ako je postavljeno više od jedne labele, onda ispiši poruku o grešci i prekini rad skripte
           if [[ "$LABEL_COUNT" -ne 1 ]]; then
             echo "Error: No label found or more than one label found."
             exit 1
           fi
-          
-          # Ako je tačno jedna labla postavljena, onda workflow prolazi
-          exit 0
+
+          echo ${{ RESULT}}
 
   reminder_comment:
     needs: check_label
