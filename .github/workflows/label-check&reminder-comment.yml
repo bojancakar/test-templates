@@ -23,12 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check labels
-      if: |
-          (contains(github.event.pull_request.labels.*.name), 'no_release' || 
-          contains(github.event.pull_request.labels.*.name), 'version:patch' || 
-          contains(github.event.pull_request.labels.*.name), 'version:minor' || 
-          contains(github.event.pull_request.labels.*.name), 'version:major') && 
-          (curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq 'length') == 1)
+      if: (contains(github.event.pull_request.labels.*.name), 'no_release' || contains(github.event.pull_request.labels.*.name), 'version:patch' || contains(github.event.pull_request.labels.*.name), 'version:minor' || contains(github.event.pull_request.labels.*.name), 'version:major') && (curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq 'length') == 1)
       run: echo "Provera labela"
     - name: Labels good 
       if: success()
