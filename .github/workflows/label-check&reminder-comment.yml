@@ -25,7 +25,7 @@ jobs:
     - name: Check labels
       run: |
         # Get the list of labels for the pull request
-        labels=$(curl -s https://api.github.com/repos/<OWNER>/<REPO>/pulls/<PULL_REQUEST_NUMBER>/labels | jq '.[].name')
+        labels=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq '.[].name')
 
         # Check if exactly one of the desired labels is present
         if [[ $labels == *"no_release"* ]]; then
