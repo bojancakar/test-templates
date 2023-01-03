@@ -25,13 +25,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Check labels
-        run: if ! grep -qE 'no_release|version:patch|version:minor|version:major' <<< "$GITHUB_EVENT_PATH"; then
-            echo "Pull request nije označen sa nekom od navedenih labela"
-            exit 1
+        run: |
+          labels=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq '.[].name')
+
+          valid_label_found=false
+
+          if [[ $labels == *"no_release"* ]]; then
+            valid_label_found=true
+          elif [[ $labels == *"version:patch"* ]]; then
+            valid_label_found=true
+          elif [[ $labels == *"version:minor"* ]]; then
+            valid_label_found=true
+          elif [[ $labels == *"version:major"* ]]; then
+            valid_label_found=true
           fi
 
-          echo "Pull request je označen sa nekom od navedenih labela"
+          if $valid_label_found && [[ $labels == *" "* ]]; then
+            exit 1
+          elif $valid_label_found; then
             exit 0
+          else
+            exit 1
+          fi
 
 
   reminder_comment:
