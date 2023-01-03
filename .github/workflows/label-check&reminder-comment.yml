@@ -18,35 +18,29 @@ jobs:
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
-  check_labels:
+  label_check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Check labels
+    - name: Label check
+      id: label_check
       run: |
-        # Get the list of labels for the pull request
-        labels=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq '.[].name')
-
-        # Check if exactly one of the desired labels is present
-        if [[ $labels == *"no_release"* ]]; then
-          # Valid label found
-          exit 0
-        elif [[ $labels == *"version:patch"* ]]; then
-          # Valid label found
-          exit 0
-        elif [[ $labels == *"version:minor"* ]]; then
-          # Valid label found
-          exit 0
-        elif [[ $labels == *"version:major"* ]]; then
-          # Valid label found
-          exit 0
-        else
-          # No valid label found
+        # Proveravamo da li je pull request označen sa više od jedne od navedenih labela
+        if grep -E -o 'no_release|version:patch|version:minor|version:major' <<< "$GITHUB_EVENT_PATH" | wc -l | grep -qE '[2-9]|[1-9][0-9]+'; then
+          echo "Pull request je označen sa više od jedne od navedenih labela"
           exit 1
         fi
+        
+        # Proveravamo da li je pull request označen sa nekom od navedenih labela
+        if ! grep -qE 'no_release|version:patch|version:minor|version:major' <<< "$GITHUB_EVENT_PATH"; then
+          echo "Pull request nije označen sa nekom od navedenih labela"
+          exit 1
+        fi
+        
+        echo "Pull request je označen sa tačno jednom od navedenih labela"
+        exit 0
 
   reminder_comment:
-    needs: check_labels
+    needs: label_check
     if: failure()
     runs-on: ubuntu-latest
     steps:
