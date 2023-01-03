@@ -8,15 +8,13 @@ jobs:
     steps:
       - name: Check Pull Request Title Format
         run: |
-          # Set the pull request title
           pull_request_title="${{ github.event.pull_request.title }}"
 
-          # Use a regular expression to check if the pull request title is in the correct format
           if [[ $pull_request_title =~ ^(fix|feat|bug|docs)\/FORNUL-[1-9].+ ]]; then
             echo "Pull request title is in the correct format"
           else
-            echo "Pull request title is not in the correct format"
+            echo "Pull request title is not in the correct format: '<type>/FORNUL-<number>' "
             exit 1
           fi
 
-#'^((f(eat|ix)|bug)|docs)/FORNUL\-[1-9].+'
+#Provera PR naslova koja nije deprecated i radjena je preko bash skripte.
