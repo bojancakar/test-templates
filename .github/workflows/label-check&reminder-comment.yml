@@ -23,7 +23,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check labels
-      if: (contains(github.event.pull_request.labels.*.name), 'no_release' || contains(github.event.pull_request.labels.*.name), 'version:patch' || contains(github.event.pull_request.labels.*.name), 'version:minor' || contains(github.event.pull_request.labels.*.name), 'version:major') && (curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq 'length') == 1)
+      if: |
+        ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}} || 
+        ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}} || 
+        ${{contains(github.event.pull_request.labels.*.name, 'version:major')}} || 
+        ${{contains(github.event.pull_request.labels.*.name, 'no_release')}} && 
+        (curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq 'length') == 1)
+        
       run: echo ${{ github.event.pull_request.label}}
     - name: Labels good 
       if: success()
@@ -41,3 +47,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: ':bangbang: This is github action reminder. :bangbang: When you make a PR on the main branch, you have to choose exactly one label.'
+# ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
