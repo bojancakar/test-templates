@@ -25,24 +25,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Check labels
-        run: |
-          # Lable koje treba proveriti
-          VALID_LABELS=("no_release" "version:patch" "version:minor" "version:major")
-          
-          # Proveri da li je postavljena tačno jedna od ovih labli
-          LABEL_COUNT=0
-          for LABEL in "${VALID_LABELS[@]}"; do
-            RESULT=$(git ls-remote --refs --tags origin "refs/heads/$LABEL" 2>/dev/null)
-            if [[ -n "$RESULT" ]]; then
-              LABEL_COUNT=$((LABEL_COUNT + 1))
-            fi
-          done
-          
-          # Ako nije postavljena ni jedna labla ili ako je postavljeno više od jedne labele, onda ispiši poruku o grešci i prekini rad skripte
-          if [[ "$LABEL_COUNT" -ne 1 ]]; then
-            echo "Error: No label found or more than one label found."
+        run: if ! grep -qE 'no_release|version:patch|version:minor|version:major' <<< "$GITHUB_EVENT_PATH"; then
+            echo "Pull request nije označen sa nekom od navedenih labela"
             exit 1
           fi
+
+          echo "Pull request je označen sa nekom od navedenih labela"
+            exit 0
 
 
   reminder_comment:
