@@ -23,7 +23,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Check labels
-      if: ((contains(toJson(github.event.pull_request.labels.*.name), 'no_release') || contains(toJson(github.event.pull_request.labels.*.name), 'version:patch') || contains(toJson(github.event.pull_request.labels.*.name), 'version:minor') || contains(toJson(github.event.pull_request.labels.*.name), 'version:major')) && (curl -s https://api.github.com/repos/<OWNER>/<REPO>/pulls/<PULL_REQUEST_NUMBER>/labels | jq 'length') == 1)
+      if: |
+          ((contains(toJson(github.event.pull_request.labels.*.name), 'no_release') || 
+          contains(toJson(github.event.pull_request.labels.*.name), 'version:patch') || 
+          contains(toJson(github.event.pull_request.labels.*.name), 'version:minor') || 
+          contains(toJson(github.event.pull_request.labels.*.name), 'version:major')) && 
+          (curl -s https://api.github.com/repos/${{ github.repository.owner }}/${{ github.repository }}/pulls/${{ github.event.number }}/labels | jq 'length') == 1)
       run: exit 0
     - name: Fail if invalid label
       if: failure()
