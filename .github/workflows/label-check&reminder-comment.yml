@@ -20,16 +20,16 @@ jobs:
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
-  Looking_for_labels:
+  check_labels:
     runs-on: ubuntu-latest
     steps:
-      - name: Check labels
-        uses: docker://agilepathway/pull-request-label-checker:latest
-        with:
-          one_of: version:major,version:minor,version:patch,no_release
-          mode: exactly
-          count: 1
-          repo_token: ${{ secrets.repo_token }}
+    - uses: actions/checkout@v2
+    - name: Check labels
+      if: ((contains(toJson(github.event.pull_request.labels.*.name), 'no_release') || contains(toJson(github.event.pull_request.labels.*.name), 'version:patch') || contains(toJson(github.event.pull_request.labels.*.name), 'version:minor') || contains(toJson(github.event.pull_request.labels.*.name), 'version:major')) && (length(github.event.pull_request.labels) == 1))
+      run: exit 0
+    - name: Fail if invalid label
+      if: failure()
+      run: exit 1
 
   reminder_comment:
     needs: Looking_for_labels
