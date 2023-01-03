@@ -35,7 +35,7 @@ jobs:
       run: exit 1
 
   reminder_comment:
-    needs: Looking_for_labels
+    needs: check_labels
     if: failure()
     runs-on: ubuntu-latest
     steps:
