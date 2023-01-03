@@ -18,29 +18,36 @@ jobs:
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
-  label_check:
+  check_label:
     runs-on: ubuntu-latest
+    name: Check label
     steps:
-    - name: Label check
-      id: label_check
-      run: |
-        # Proveravamo da li je pull request označen sa više od jedne od navedenih labela
-        if grep -E -o 'no_release|version:patch|version:minor|version:major' <<< "$GITHUB_EVENT_PATH" | wc -l | grep -qE '[2-9]|[1-9][0-9]+'; then
-          echo "Pull request je označen sa više od jedne od navedenih labela"
-          exit 1
-        fi
-        
-        # Proveravamo da li je pull request označen sa nekom od navedenih labela
-        if  grep -qE 'no_release|version:patch|version:minor|version:major' <<< "$GITHUB_EVENT_PATH"; then
-          echo "Pull request nije označen sa nekom od navedenih labela"
-          exit 1
-        fi
-        
-        echo "Pull request je označen sa tačno jednom od navedenih labela"
-        exit 0
+      - uses: actions/checkout@v2
+      - name: Check labels
+        run: |
+          # Lable koje treba proveriti
+          VALID_LABELS=("no_release" "version:patch" "version:minor" "version:major")
+          
+          # Proveri da li je postavljena tačno jedna od ovih labli
+          LABEL_COUNT=0
+          for LABEL in "${VALID_LABELS[@]}"; do
+            RESULT=$(git ls-remote --refs --tags origin "refs/heads/$LABEL" 2>/dev/null)
+            if [[ -n "$RESULT" ]]; then
+              LABEL_COUNT=$((LABEL_COUNT + 1))
+            fi
+          done
+          
+          # Ako nije postavljena ni jedna labla ili ako je postavljeno više od jedne labele, onda ispiši poruku o grešci
+          if [[ "$LABEL_COUNT" -ne 1 ]]; then
+            echo "Error: No label found or more than one label found."
+            exit 1
+          fi
+          
+          # Ako je tačno jedna labla postavljena, onda workflow prolazi
+          exit 0
 
   reminder_comment:
-    needs: label_check
+    needs: check_label
     if: failure()
     runs-on: ubuntu-latest
     steps:
