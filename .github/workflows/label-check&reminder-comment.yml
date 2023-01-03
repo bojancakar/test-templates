@@ -29,8 +29,8 @@ jobs:
         ${{contains(github.event.pull_request.labels.*.name, 'version:major')}} || 
         ${{contains(github.event.pull_request.labels.*.name, 'no_release')}} && 
         (curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq 'length') == 1)
-        
-      run: echo ${{ github.event.pull_request.label}}
+
+      run: echo ${{ github.event.pull_request.labels.*.name}}
     - name: Labels good 
       if: success()
       run: exit 0
