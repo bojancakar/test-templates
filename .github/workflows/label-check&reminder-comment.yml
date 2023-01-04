@@ -32,7 +32,8 @@ jobs:
           valid_label_found=false
 
           # Check if exactly one of the desired labels is present
-          if [[ $labels == "no_release" ]] || [[ $labels == "version:major" ]] || [[ $labels == "version:minor" ]] || [[ $labels == "version:patch"]]; then
+          if [[ $labels == *"no_release"* ]] || [[ $labels == *"version:major"* ]] || [[ $labels == *"version:minor"* ]] || [[ $labels == *"version:patch"*]]
+          then
             # Valid label found
             valid_label_found=true
           fi
