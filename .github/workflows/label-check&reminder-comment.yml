@@ -32,6 +32,7 @@ jobs:
             echo "Invalid number of labels. Pipeline will be terminated."
             exit 1
           
+          
   reminder_comment:
     needs: check_label
     if: failure()
