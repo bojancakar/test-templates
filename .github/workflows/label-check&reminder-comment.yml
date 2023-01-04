@@ -28,6 +28,7 @@ jobs:
         run: |
           if github.event.pull_request.labels.total_count == 1
             echo "Label is present. Pipeline will continue."
+            exit 0 
           else
             echo "Invalid number of labels. Pipeline will be terminated."
             exit 1
