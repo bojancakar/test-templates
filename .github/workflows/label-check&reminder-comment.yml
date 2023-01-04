@@ -18,40 +18,19 @@ jobs:
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
+
   check_label:
     runs-on: ubuntu-latest
-    name: Check label
     steps:
-      - uses: actions/checkout@v2
-      - name: Check labels
+      - uses: actions/checkout@v3
+      - name: Check label
+        if: contains(github.event.label.name, ['no_release', 'version:minor', 'version:major', 'version:patch'])
         run: |
-          # Get labels on the pull request
-          labels=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq '.[].name')
-
-          # Initialize flag to false
-          valid_label_found=false
-
-          # Check if exactly one of the desired labels is present
-          if [[ $labels == *"no_release"* ]] || [[ $labels == *"version:major"* ]] || [[ $labels == *"version:minor"* ]] || [[ $labels == *"version:patch"*]]
-          then
-            # Valid label found
-            valid_label_found=true
-          fi
-
-          # Check if exactly one valid label was found and if there is only one label present
-          if $valid_label_found && [[ $labels == *" "* ]]; then
-            # Multiple labels present
-            echo "Vise labela"
-            exit 1
-          elif $valid_label_found; then
-            # Exactly one valid label was found
-            echo "bravo tacno jedna labela"
-            exit 0
+          if github.event.pull_request.labels.total_count == 1
+            echo "Label is present. Pipeline will continue."
           else
-            # No valid label found or multiple valid labels found
-            echo "Vise labela ili nijedna"
+            echo "Invalid number of labels. Pipeline will be terminated."
             exit 1
-          fi
           
   reminder_comment:
     needs: check_label
