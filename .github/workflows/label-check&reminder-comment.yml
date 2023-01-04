@@ -30,7 +30,7 @@ jobs:
           if [[ $labels =~ ^(no_release|version:minor|version:major|version:patch)$ ]]; then
             echo "Exactly one label is selected."
           else
-            echo "Error: You must select exactly one label."
+            echo "Error: You need to select exactly one label."
             exit 1
           fi
           
@@ -40,8 +40,8 @@ jobs:
     if: failure()
     runs-on: ubuntu-latest
     steps:
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: ':bangbang: This is github action reminder. :bangbang: When you make a PR on the main branch, you have to choose exactly one label.'
-# ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
+    - uses: actions/checkout@v3
+    - name: Comment on pull request
+      run: |
+        curl -H "Authorization: token YOUR_TOKEN" -X POST -d '{"body": "This is a comment on the pull request"}'\
+        https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments
