@@ -21,9 +21,9 @@ jobs:
 
   check_label:
     runs-on: ubuntu-latest
-    name: Check label
+    name: Check labels
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Check labels
         run: |
           labels=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq '.[].name')
@@ -32,25 +32,32 @@ jobs:
 
           if [[ $labels == *"no_release"* ]]; then
             valid_label_found=true
+            echo "Valid label found"
           elif [[ $labels == *"version:patch"* ]]; then
             valid_label_found=true
+            echo "Valid label found"
           elif [[ $labels == *"version:minor"* ]]; then
             valid_label_found=true
+            echo "Valid label found"
           elif [[ $labels == *"version:major"* ]]; then
             valid_label_found=true
+            echo "Valid label found"
           fi
 
           if $valid_label_found && [[ $labels == *" "* ]]; then
             exit 1
+            echo "Multiple labels found"
           elif $valid_label_found; then
             exit 0
+            echo "Exactly one label was found"
           else
             exit 1
+            echo "No label found or multiple labels found"
           fi
 
 
   reminder_comment:
-    needs: check_label
+    needs: check_labels
     if: failure()
     runs-on: ubuntu-latest
     steps:
