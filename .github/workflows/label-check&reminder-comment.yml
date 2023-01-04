@@ -13,7 +13,7 @@ jobs:
       - name: Add label to pull request
         run: |
           curl -X POST \
-            -H "Authorization: token ${{ sec}rets.GITHUB_TOKEN }" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
@@ -26,7 +26,7 @@ jobs:
       - name: Check label
         if: contains(github.event.pull_request.labels.*.name, 'no_release') || contains(github.event.pull_request.labels.*.name, 'version:minor') || contains(github.event.pull_request.labels.*.name, 'version:major') || contains(github.event.pull_request.labels.*.name, 'version:patch')
         run: |
-            if [ $(curl -H "Authorization: token TOKEN"\
+            if [ $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}"\
             https://api.github.com/repos/${{ github.repository }}/pulls/{{ github.event..number }} | jq .labels[].name | grep LABEL_NAME | wc -l) -eq 0 ]; then
               exit 1
             else
