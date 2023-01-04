@@ -32,27 +32,22 @@ jobs:
 
           if [[ $labels == *"no_release"* ]]; then
             valid_label_found=true
-            echo "Valid label found"
           elif [[ $labels == *"version:patch"* ]]; then
             valid_label_found=true
-            echo "Valid label found"
           elif [[ $labels == *"version:minor"* ]]; then
             valid_label_found=true
-            echo "Valid label found"
           elif [[ $labels == *"version:major"* ]]; then
             valid_label_found=true
-            echo "Valid label found"
           fi
 
           if $valid_label_found && [[ $labels == *" "* ]]; then
+              echo "Multiple labels found"
             exit 1
-            echo "Multiple labels found"
-          elif $valid_label_found; then
+              echo "Exactly one label was found"
             exit 0
-            echo "Exactly one label was found"
           else
+              echo "No label found or multiple labels found"
             exit 1
-            echo "No label found or multiple labels found"
           fi
 
 
