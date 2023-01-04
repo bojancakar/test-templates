@@ -19,7 +19,7 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
 
-  check_label:
+  check_labels:
     runs-on: ubuntu-latest
     name: Check labels
     steps:
