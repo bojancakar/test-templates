@@ -28,9 +28,9 @@ jobs:
           labels=$(jq --raw-output '.pull_request.labels[] | .name' "$GITHUB_EVENT_PATH")
 
           if [[ $labels =~ ^(no_release|version:minor|version:major|version:patch)$ ]]; then
-            echo "Exactly one of the specified labels is present."
+            echo "Exactly one label is selected."
           else
-            echo "Error: More than one of the specified labels is present or none are present."
+            echo "Error: You must select exactly one label."
             exit 1
           fi
           
