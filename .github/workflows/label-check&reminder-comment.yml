@@ -26,12 +26,14 @@ jobs:
       - name: Check label
         if: contains(github.event.pull_request.labels.*.name, 'no_release') || contains(github.event.pull_request.labels.*.name, 'version:minor') || contains(github.event.pull_request.labels.*.name, 'version:major') || contains(github.event.pull_request.labels.*.name, 'version:patch')
         run: |
-            if [ $(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}"\
-            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }}" | jq .labels[].name | grep LABEL_NAME | wc -l) -eq 0 ]; then
-              exit 1
-            else
-              exit 0
-            fi
+          labels=$(jq --raw-output '.pull_request.labels[] | .name' "$GITHUB_EVENT_PATH")
+
+          if [[ $labels =~ ^(no_release|version:minor|version:major|version:patch)$ ]]; then
+            echo "Exactly one of the specified labels is present."
+          else
+            echo "Error: More than one of the specified labels is present or none are present."
+            exit 1
+          fi
           
 
   reminder_comment:
