@@ -18,41 +18,48 @@ jobs:
             -d "{\"labels\":[\"no_release\"]}" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels"
 
-
-  check_labels:
+  check_label:
     runs-on: ubuntu-latest
-    name: Check labels
+    name: Check label
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Check labels
         run: |
-          labels=$(curl -s https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/labels | jq '.[].name')
+          # Get labels on the pull request
+          labels=$(curl -s https://api.github.com/repos/<OWNER>/<REPO>/pulls/<PULL_REQUEST_NUMBER>/labels | jq '.[].name')
 
+          # Initialize flag to false
           valid_label_found=false
 
+          # Check if exactly one of the desired labels is present
           if [[ $labels == *"no_release"* ]]; then
+            # Valid label found
             valid_label_found=true
           elif [[ $labels == *"version:patch"* ]]; then
+            # Valid label found
             valid_label_found=true
           elif [[ $labels == *"version:minor"* ]]; then
+            # Valid label found
             valid_label_found=true
           elif [[ $labels == *"version:major"* ]]; then
+            # Valid label found
             valid_label_found=true
           fi
 
+          # Check if exactly one valid label was found and if there is only one label present
           if $valid_label_found && [[ $labels == *" "* ]]; then
-              echo "Multiple labels found"
+            # Multiple labels present
             exit 1
-              echo "Exactly one label was found"
+          elif $valid_label_found; then
+            # Exactly one valid label was found
             exit 0
           else
-              echo "No label found or multiple labels found"
+            # No valid label found or multiple valid labels found
             exit 1
           fi
-
-
+          
   reminder_comment:
-    needs: check_labels
+    needs: check_label
     if: failure()
     runs-on: ubuntu-latest
     steps:
