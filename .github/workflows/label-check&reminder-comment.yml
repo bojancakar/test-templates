@@ -26,7 +26,7 @@ jobs:
       - name: Check label
         if: contains(github.event.pull_request.labels.*.name, 'no_release') || contains(github.event.pull_request.labels.*.name, 'version:minor') || contains(github.event.pull_request.labels.*.name, 'version:major') || contains(github.event.pull_request.labels.*.name, 'version:patch')
         run: |
-          if github.event.pull_request.labels.length == 1; then
+          if ${{ github.event.pull_request.labels[*].name.length }} == 1; then
             echo "Label is present. Pipeline will continue."
             exit 0 
           else
