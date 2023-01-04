@@ -49,12 +49,15 @@ jobs:
           # Check if exactly one valid label was found and if there is only one label present
           if $valid_label_found && [[ $labels == *" "* ]]; then
             # Multiple labels present
+            echo "Vise labela"
             exit 1
           elif $valid_label_found; then
             # Exactly one valid label was found
+            echo "bravo tacno jedna labela"
             exit 0
           else
             # No valid label found or multiple valid labels found
+            echo "Vise labela ili nijedna"
             exit 1
           fi
           
