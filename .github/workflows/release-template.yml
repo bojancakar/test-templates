@@ -8,6 +8,8 @@ jobs:
   new_version:
     if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no_release')
     runs-on: ubuntu-latest
+    timeout-minutes: 1
+
     steps:
     - name: checkout
       uses: actions/checkout@v3
